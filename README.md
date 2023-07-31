@@ -38,13 +38,17 @@
   ```
   $ composer install
   ```
+  ```
   $ php artisan migrate
+  ```
   ```
   $ php artisan key:generate
   ``` 
+  ```
   $ npm install
   ```
 - Start development server
+  ```
   ```
   $ npm run serve
   ```
