@@ -9,7 +9,7 @@
                     }"
                     ><img
                         class="back-btn"
-                        src="../../../assets/icons/arrow-left-24.svg"
+                        src="../assets/icons/arrow-left-24.svg"
                         alt=""
                     />
                 </router-link>
@@ -59,6 +59,21 @@
                 />
             </label>
 
+            <span>Status</span>
+            <label>
+                <select class="input" v-model="taskForm.status">
+                    <option value="" disabled>Select status</option>
+                    <option value="open">Open</option>
+                    <option value="in_progress">In Progress</option>
+                    <option value="done">Done</option>
+                </select>
+                <div
+                    class="text-danger"
+                    v-if="taskForm.errors.has('status')"
+                    v-html="taskForm.errors.get('status')"
+                />
+            </label>
+
             <button class="submit">Update</button>
         </form>
     </div>
@@ -66,7 +81,7 @@
 <script>
 import Form from "vform";
 export default {
-    props: ["id", "title", "description", "deadline"],
+    props: ["id", "title", "description", "deadline", "status"],
 
     data() {
         return {
@@ -75,6 +90,7 @@ export default {
                 title: "",
                 description: "",
                 deadline: "",
+                status: "",
             }),
         };
     },
@@ -82,10 +98,10 @@ export default {
         this.taskForm.title = this.title;
         this.taskForm.description = this.description;
         this.taskForm.deadline = this.deadline;
+        this.taskForm.status = this.status;
     },
     methods: {
         submitData() {
-            this.isLoading = true;
             const user = this.$store.getters["userData"];
             this.taskForm
                 .post("/api/v1/task/store/" + this.id, {
@@ -95,7 +111,6 @@ export default {
                 })
                 .then((response) => {
                     this.msg = response.data.user_message;
-                    this.isLoading = false;
 
                     this.$toast.success(response.data.user_message);
                     this.$router.push({ name: "Card" });
@@ -258,8 +273,8 @@ export default {
     }
 }
 
-@media(max-width: 450px){
-    .form{
+@media (max-width: 450px) {
+    .form {
         min-width: 320px;
     }
 }

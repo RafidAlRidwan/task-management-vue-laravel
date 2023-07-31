@@ -34,7 +34,6 @@ class AuthController extends Controller
 
     $user = User::create($request->all());
 
-
     if ($user) {
       $payload = [
         'code'         => 200,

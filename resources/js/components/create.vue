@@ -2,6 +2,7 @@
     <div class="task-create mt-3">
         <form class="form" method="post" @submit.prevent="submitData()">
             <p class="title">CREATE TASK</p>
+
             <span>Title</span>
             <label>
                 <input
@@ -16,8 +17,8 @@
                     v-html="taskForm.errors.get('title')"
                 />
             </label>
-            <span>Description</span>
 
+            <span>Description</span>
             <label>
                 <textarea
                     v-model="taskForm.description"
@@ -31,8 +32,8 @@
                     v-html="taskForm.errors.get('description')"
                 />
             </label>
-            <span>Deadline</span>
 
+            <span>Deadline</span>
             <label>
                 <input
                     v-model="taskForm.deadline"
@@ -44,6 +45,21 @@
                     class="text-danger"
                     v-if="taskForm.errors.has('deadline')"
                     v-html="taskForm.errors.get('deadline')"
+                />
+            </label>
+
+            <span>Status</span>
+            <label>
+                <select class="input" v-model="taskForm.status">
+                    <option value="" disabled>Select status</option>
+                    <option value="open">Open</option>
+                    <option value="in_progress">In Progress</option>
+                    <option value="done">Done</option>
+                </select>
+                <div
+                    class="text-danger"
+                    v-if="taskForm.errors.has('status')"
+                    v-html="taskForm.errors.get('status')"
                 />
             </label>
 
@@ -61,12 +77,12 @@ export default {
                 title: "",
                 description: "",
                 deadline: "",
+                status: "",
             }),
         };
     },
     methods: {
         submitData() {
-            this.isLoading = true;
             const user = this.$store.getters["userData"];
             this.taskForm
                 .post("/api/v1/task/store", {
@@ -76,8 +92,6 @@ export default {
                 })
                 .then((response) => {
                     this.msg = response.data.user_message;
-                    this.isLoading = false;
-
                     this.$toast.success(response.data.user_message);
                     this.$router.push({ name: "Card" });
                 });

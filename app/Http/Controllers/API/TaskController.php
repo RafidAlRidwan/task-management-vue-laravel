@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\Task;
+use App\Mail\TaskAssignMail;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class TaskController extends Controller
@@ -16,6 +18,7 @@ class TaskController extends Controller
       'title' => 'required',
       'description' => 'required',
       'deadline' => 'required',
+      'status' => 'required',
     ]);
     if ($validator->fails()) {
       return response(
@@ -51,6 +54,7 @@ class TaskController extends Controller
       'title' => 'required',
       'description' => 'required',
       'deadline' => 'required',
+      'status' => 'required',
     ]);
     if ($validator->fails()) {
       return response(
@@ -87,8 +91,11 @@ class TaskController extends Controller
       $skip =  ($perPage * ($currentPage - 1));
     }
 
-
-    $task = Task::with('user');
+    $task = Task::where('deadline', '>=', date('Y-m-d'))->with('user');
+    
+    if (!empty($request->search)) {
+      $task = $task->where('title', 'LIKE', "%{$request->search}%");
+    }
 
     $taskTotal = $task->count();
     $taskResponse = $task->skip($skip)->take($perPage)->get();
@@ -119,9 +126,17 @@ class TaskController extends Controller
     $task->save();
 
     if ($task) {
+      $details = [
+        'title' => 'Task Assigned',
+        'body' => 'You have been assigned a task',
+      ];
+      if (!empty($task->user->email)) {
+        Mail::to($task->user->email)->send(new TaskAssignMail($details));
+      }
+
       $payload = [
         'code'         => 200,
-        'user_message' => 'Task Assign Successfully',
+        'user_message' => 'Task Assign Successfully & Mail Sent',
         'data' => [],
       ];
       return response()->json($payload, 200);

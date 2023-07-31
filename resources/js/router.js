@@ -33,7 +33,8 @@ const router = createRouter({
           id: route.query.id, 
           title: route.query.title, 
           description: route.query.description, 
-          deadline: route.query.deadline 
+          deadline: route.query.deadline,
+          status: route.query.status,
         }
       ),
       name: "Details",
@@ -49,7 +50,8 @@ const router = createRouter({
         id: route.query.id, 
         title: route.query.title, 
         description: route.query.description, 
-        deadline: route.query.deadline 
+        deadline: route.query.deadline,
+        status: route.query.status,
       }
     ),
     name: "Edit",

@@ -5,9 +5,13 @@
                 <div class="title-heading">TASK LIST</div>
             </div>
         </div>
-
+        <div class="d-flex justify-content-center m-5">
+            <div class="search-box">
+                <input v-model="searchTextValue" v-on:keyup="onSearch" class="search-input" type="text" placeholder="Search task..">
+            </div>
+        </div>
         <div class="row flex justify-content-center">
-            <div
+            <div v-if="tasks.length > 0"
                 v-for="(task, index) in tasks"
                 :key="index"
                 class="col-lg-4 col-sm-4 col-md-4 col-xl-4 col-xs-12 mb-4"
@@ -27,6 +31,12 @@
                             <p>Task Assign: {{ task.user ? task.user.name : 'Not Assign' }}</p>
                             
                         </p>
+                        <p class="card-text">
+                            <p v-if="task.status == 'open'">Status: Open</p>
+                            <p v-else-if="task.status == 'in_progress'" >Status: In Progress</p>
+                            <p v-else-if="task.status == 'done'" >Status: Done</p>
+                            <p v-else >Status: No Status</p>
+                        </p>
                         <div class="d-flex justify-content-center gap-3">
                             <div
                                 class="card-btn"
@@ -41,11 +51,12 @@
                                                 title: task.title,
                                                 description: task.description,
                                                 deadline: task.deadline,
+                                                status: task.status,
                                             },
                                         }"
                                         > 
                                        <div class="btn-border edit-icon">
-                                        <img class="btn-icons" src="../../../assets/icons/edit-icon.svg" alt="">
+                                        <img class="btn-icons" src="../assets/icons/edit-icon.svg" alt="">
                                        </div>
                                         </router-link
                                     >
@@ -61,11 +72,12 @@
                                                 title: task.title,
                                                 description: task.description,
                                                 deadline: task.deadline,
+                                                status: task.status,
                                             },
                                         }"
                                         >
                                        <div class="btn-border view-icon">
-                                        <img class="btn-icons" src="../../../assets/icons/view-icon.svg" alt="">
+                                        <img class="btn-icons" src="../assets/icons/view-icon.svg" alt="">
                                        </div>
                                         </router-link
                                     >
@@ -83,7 +95,7 @@
                                         }"
                                         >
                                         <div class="btn-border asign-icon">
-                                            <img class="btn-icons" src="../../../assets/icons/asign-icon.svg" alt="">
+                                            <img class="btn-icons" src="../assets/icons/asign-icon.svg" alt="">
                                         </div>
                                         </router-link
                                     >
@@ -93,6 +105,16 @@
                     </div>
                 </div>
             </div>
+            <div v-else class="d-flex justify-content-center">
+                <div class="container-fluid bg">
+                    <div class="row h-100 w-100">
+                        <div class="col-12 text-center my-auto">
+                        <h1>NOTHING FOUND!</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="flex justify-content item-center p-2">
                 <div v-if="totalData > perPage" class="paginationComponent">
                     <Pagination
@@ -102,7 +124,9 @@
                     />
                 </div>
             </div>
+
         </div>
+        
     </div>
 </template>
 <script>
@@ -134,6 +158,21 @@ export default {
         this.getTasks(this.currentPage);
     },
     methods: {
+        onSearch(){
+            const user = this.$store.getters["userData"];
+            axios
+                .get("/api/v1/task/list?page=" + this.currentPage +"&search="+this.searchTextValue, {
+                    headers: {
+                        Authorization: `Bearer ${user.access_token}`,
+                    },
+                })
+                .then((response) => {
+                    // Clear the token from  Vuex state.
+                    this.tasks = response.data.data;
+                    this.totalData = response.data.total;
+                    this.perPage = response.data.perPage;
+                });
+            },
         setCurrentPage(currentPage) {
             this.currentPage = currentPage;
         },
@@ -228,5 +267,116 @@ export default {
     text-align: center;
     color: royalblue;
     font-weight: bold;
+}
+
+body {
+  text-align: center;
+  min-height: 93vh;
+  background-color: #485461;
+background-image: linear-gradient(315deg, #485461 0%, #28313b 74%);
+
+}
+
+h1 {
+  font-family: 'Montserrat', sans-serif;
+  color: #fff;
+}
+
+/* You just need to get this field - start */
+
+.search-box {
+  width: 350px;
+  position: relative;
+  display: flex;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+}
+
+.search-input {
+  width: 100%;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  padding: 15px 45px 15px 15px;
+  background-color: #d6d6f0;
+  color: #6c6c6c;
+  border-radius: 6px;
+  border:none;
+  transition: all .4s;
+}
+
+.search-input:focus {
+  border:none;
+  outline:none;
+  box-shadow: 0 1px 12px #b8c6db;
+  -moz-box-shadow: 0 1px 12px #b8c6db;
+  -webkit-box-shadow: 0 1px 12px #b8c6db;
+}
+
+.search-btn {
+  background-color: transparent;
+  font-size: 18px;
+  padding: 6px 9px;
+  margin-left:-45px;
+  border:none;
+  color: #6c6c6c;
+  transition: all .4s;
+  z-index: 10;
+}
+
+.search-btn:hover {
+  transform: scale(1.2);
+  cursor: pointer;
+  color: black;
+}
+
+.search-btn:focus {
+  outline:none;
+  color:black;
+}
+
+/* You just need to get this field - end */
+
+.footer {
+  position:fixed;
+  bottom:5px;
+}
+
+.footer p {
+  font-family: 'Montserrat', sans-serif;
+  font-size:12px;
+  color:#000;
+}
+
+.footer a {
+  color: #fff;
+  transition: all .4s;
+}
+
+.footer a:hover {
+  color: #eaeaeb;
+}
+
+.container-fluid {
+  font-family: 'Roboto', serif;
+  font-weight: bold;
+}
+
+.bg {
+  background: transparent;
+}
+
+h1 { 
+background: ransparent;
+color: #999;
+border-radius: 0.25em;
+}
+
+.row {
+  margin: 0;
+}
+.col-12 {
+  margin: 0;
 }
 </style>

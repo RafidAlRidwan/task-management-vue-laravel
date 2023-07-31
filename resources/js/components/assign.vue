@@ -9,7 +9,7 @@
                     }"
                     ><img
                         class="back-btn"
-                        src="../../../assets/icons/arrow-left-24.svg"
+                        src="../assets/icons/arrow-left-24.svg"
                         alt=""
                     />
                 </router-link>
@@ -17,7 +17,7 @@
             <span>Select User</span>
             <label>
                 <select class="input" v-model="taskForm.assigned_user_id">
-                    <option value="" disabled>Select a car</option>
+                    <option value="" disabled>Select a user</option>
                     <option :value="user.id" v-for="user in users">
                         {{ user.name }}
                     </option>
@@ -29,7 +29,10 @@
                 />
             </label>
 
-            <button class="submit">Submit</button>
+            <div v-if="isLoading" class="d-flex justify-content-center">
+                <div class="spinner-border text-primary" role="status"></div>
+            </div>
+            <button v-else class="submit">Submit</button>
         </form>
     </div>
 </template>
@@ -64,11 +67,11 @@ export default {
                 })
                 .then((response) => {
                     this.users = response.data.data;
-                    console.log(this.users);
                 });
         },
         submitData() {
             const user = this.$store.getters["userData"];
+            this.isLoading = true;
             this.taskForm
                 .post("/api/v1/task/assign/" + this.id, {
                     headers: {
@@ -76,6 +79,7 @@ export default {
                     },
                 })
                 .then((response) => {
+                    this.isLoading = false;
                     this.msg = response.data.user_message;
                     this.$toast.success(response.data.user_message);
                     this.$router.push({ name: "Card" });

@@ -9,7 +9,7 @@
                     }"
                     ><img
                         class="back-btn"
-                        src="../../../assets/icons/arrow-left-24.svg"
+                        src="../assets/icons/arrow-left-24.svg"
                         alt=""
                     />
                 </router-link>
@@ -18,8 +18,8 @@
             <label>
                 <input readOnly :value="title" type="text" class="input" />
             </label>
-            <span>Description</span>
 
+            <span>Description</span>
             <label>
                 <textarea
                     class="form-control"
@@ -34,12 +34,22 @@
             <label>
                 <input readOnly :value="deadline" type="date" class="input" />
             </label>
+
+            <span>Status</span>
+            <label>
+                <select disabled class="input">
+                    <option value="" disabled>Select status</option>
+                    <option :value="open">Open</option>
+                    <option :value="in_progress">In Progress</option>
+                    <option :value="done">Done</option>
+                </select>
+            </label>
         </div>
     </div>
 </template>
 <script>
 export default {
-    props: ["id", "title", "description", "deadline"],
+    props: ["id", "title", "description", "deadline", "status"],
     data() {
         return {};
     },
@@ -196,8 +206,8 @@ export default {
         opacity: 0;
     }
 }
-@media(max-width: 450px){
-    .form{
+@media (max-width: 450px) {
+    .form {
         min-width: 320px;
     }
 }
