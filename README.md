@@ -57,11 +57,11 @@
 
 [:arrow_up: Back to top](#index)
     
-- ![LOGIN](https://github.com/RafidAlRidwan/task-management-vue-laravel/public/assets/screenshots/login.png?raw=true)
-- ![REGISTRATION](https://github.com/RafidAlRidwan/task-management-vue-laravel/public/assets/screenshots/registration.png?raw=true)
-- ![DASHBOARD](https://github.com/RafidAlRidwan/task-management-vue-laravel/public/assets/screenshots/dashboard.png?raw=true)
-- ![CREATE](https://github.com/RafidAlRidwan/task-management-vue-laravel/public/assets/screenshots/create.png?raw=true)
-- ![ASSIGN](https://github.com/RafidAlRidwan/task-management-vue-laravel/public/assets/screenshots/assign.png?raw=true)
+- ![LOGIN](../assets/screenshots/login.png?raw=true)
+- ![REGISTRATION](../assets/screenshots/registration.png?raw=true)
+- ![DASHBOARD](../assets/screenshots/dashboard.png?raw=true)
+- ![CREATE](../assets/screenshots/create.png?raw=true)
+- ![ASSIGN](../assets/screenshots/assign.png?raw=true)
 
 
 
