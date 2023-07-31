@@ -22,35 +22,35 @@
   ```
 
   ```
-  $ git clone https://github.com/RafidAlRidwan/task-management-vue-laravel.git
+  git clone https://github.com/RafidAlRidwan/task-management-vue-laravel.git
   ```
 
 - change directory
   ```
-  $ cd task-management-vue-laravel
+  cd task-management-vue-laravel
   ```
 - Copy sample `.env.example` file and change configuration according to your need in ".env" file and create Database
 
 
 - Install php libraries
   ```
-  $ composer install
+  composer install
   ```
   ```
-  $ php artisan migrate
+  php artisan migrate
   ```
   ```
-  $ php artisan key:generate
+  php artisan key:generate
   ``` 
   ```
-  $ npm install
+  npm install
   ```
 - Start development server with both command 
   ```
-  $ npm run dev
+  npm run dev
   ```
   ```
-  $ php artisan serve
+  php artisan serve
   ```
 
 #### Use the app
