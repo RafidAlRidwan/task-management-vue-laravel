@@ -23,17 +23,16 @@
   ```
 
   ```
-  $ https://github.com/RafidAlRidwan/task-management-vue-laravel.git
+  $ git clone https://github.com/RafidAlRidwan/task-management-vue-laravel.git
   ```
 
 - change directory
   ```
   $ cd task-management-vue-laravel
   ```
-- Copy sample `env` file and change configuration according to your need in ".env" file and create Database
+- Copy sample `.env.example` file and change configuration according to your need in ".env" file and create Database
   ```
-  $ cp .env.example .env
-  ```
+
 - Install php libraries
   ```
   $ composer install
@@ -47,9 +46,9 @@
   ```
   $ npm install
   ```
-- Start development server
+- Start development server with both command 
   ```
-  $ npm run serve
+  $ npm run dev
   ```
   ```
   $ php artisan serve
