@@ -49,7 +49,6 @@
   ```
 - Start development server
   ```
-  ```
   $ npm run serve
   ```
   $ php artisan serve
