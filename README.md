@@ -51,6 +51,7 @@
   ```
   $ npm run serve
   ```
+  ```
   $ php artisan serve
   ```
 
