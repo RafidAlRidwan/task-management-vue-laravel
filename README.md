@@ -3,7 +3,6 @@
 
 ## Installation
 
-[:arrow_up: Back to top](#index)
 
 #### Installing dependencies
 
@@ -31,7 +30,7 @@
   $ cd task-management-vue-laravel
   ```
 - Copy sample `.env.example` file and change configuration according to your need in ".env" file and create Database
-  ```
+
 
 - Install php libraries
   ```
@@ -58,7 +57,6 @@
 
 ## Screenshot
 
-[:arrow_up: Back to top](#index)
     
 - ![LOGIN](../assets/screenshots/login.png?raw=true)
 - ![REGISTRATION](../assets/screenshots/registration.png?raw=true)
