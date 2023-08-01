@@ -45,7 +45,7 @@
   ```
   npm install
   ```
-- Start development server with both command 
+- Start the development server using two separate command prompt:
   ```
   npm run dev
   ```

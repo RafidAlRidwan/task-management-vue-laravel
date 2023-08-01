@@ -1,8 +1,6 @@
 import { createStore } from "vuex";
-// import categoryModule from "./modules/categories/index.js";
 const store = createStore({
   modules: {
-    // category: categoryModule,
   },
   state() {
     return { 
